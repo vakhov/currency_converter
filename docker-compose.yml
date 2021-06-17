@@ -2,7 +2,7 @@ version: '2.1'
 
 services:
   web:
-    build: app
+    build: currency_converter
     command: python main.py
     depends_on:
       - redis
