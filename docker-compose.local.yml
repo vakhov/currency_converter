@@ -1,0 +1,23 @@
+version: '2.1'
+
+services:
+  web:
+    ports:
+      - "8000:8000"
+    labels:
+     - traefik.http.routers.web.rule=PathPrefix(`/`)
+
+
+  traefik:
+    image: traefik:v2.4.8
+    command: --api.insecure=true --providers.docker --accesslog=true
+    restart: always
+
+    ports:
+      - "80:80"
+      - "88:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    labels:
+      - traefik.enable=false

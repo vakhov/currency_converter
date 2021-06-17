@@ -1,0 +1,5 @@
+*
+!.env_example
+!docker-compose.yml
+!docker-compose.local.yml
+!README.md
