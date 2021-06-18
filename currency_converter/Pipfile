@@ -9,6 +9,8 @@ coverage = "==5.5"
 [packages]
 aiohttp = "==3.6.2"
 redis = "==3.5.3"
+pydantic = "==1.8.2"
+aiohttp-devtools = "==0.13.1"
 
 [requires]
 python_version = "3.8"

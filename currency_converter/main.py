@@ -6,12 +6,9 @@ from app.routes import routes
 
 env = Environ()
 
+app = Application()
 
-def main():
-    app = Application()
-    app.router.add_routes(routes=routes)
-    run_app(app, host=env['SERVICE_HOST'], port=env['SERVICE_PORT'])
-
+app.add_routes(routes=routes)
 
 if __name__ == '__main__':
-    main()
+    run_app(app, host=env['SERVICE_HOST'], port=env['SERVICE_PORT'])
