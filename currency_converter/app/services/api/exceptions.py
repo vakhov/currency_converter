@@ -1,3 +1,4 @@
+import json
 from typing import Optional
 
 
@@ -21,6 +22,14 @@ class CurrencyError(Exception):
             class_name=self.__class__.__name__,
             message=self.message
         )
+
+    def to_dict(self):
+        return dict(
+            error=self.message
+        )
+
+    def json(self):
+        return json.dumps(self.to_dict())
 
 
 class CurrencyValueError(CurrencyError):

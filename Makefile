@@ -20,7 +20,3 @@ build: ## Run project
 sh: ## Open sh in web container
 	docker-compose exec web sh
 
-.PHONY: test
-mm: ## Django makemessages
-	docker-compose exec web test
-

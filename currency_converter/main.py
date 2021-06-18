@@ -1,28 +1,8 @@
-import aioredis
 from aiohttp.web import run_app
 from aiohttp.web_app import Application
 
 from app.helpers.klasses import Environ
 from app.routes import routes
-from app.services.api.currency import CurrencyApi
-
-
-async def connect_to_redis(url: str):
-    redis = await aioredis.create_redis_pool(url)
-    return redis
-
-
-class RedisConnetion:
-
-    def __init__(self, app: Application) -> None:
-        self._app = app
-
-    async def on_startup(self):
-        setattr(self._app, 'client', CurrencyApi())
-
-    async def cleanup(self):
-        pass
-
 
 env = Environ()
 
