@@ -6,8 +6,7 @@ services:
     ports:
       - "8000:8000"
     labels:
-     - traefik.http.routers.web.rule=PathPrefix(`/`)
-
+      - traefik.http.routers.web.rule=PathPrefix(`/`)
 
   traefik:
     image: traefik:v2.4.8
@@ -20,5 +19,10 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
+    labels:
+      - traefik.enable=false
+
+  redis:
+    command: redis-server --requirepass redis_password --port 6379
     labels:
       - traefik.enable=false
