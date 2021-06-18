@@ -2,6 +2,7 @@ version: '2.1'
 
 services:
   web:
+    command: adev runserver --port 8000
     ports:
       - "8000:8000"
     labels:
