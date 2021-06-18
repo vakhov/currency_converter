@@ -16,4 +16,4 @@ RUN pipenv install --system --deploy
 
 COPY . /app
 
-ENTRYPOINT ["python", "main.py"]
+#ENTRYPOINT ["python", "main.py"]
