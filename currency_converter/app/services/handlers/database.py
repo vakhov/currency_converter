@@ -9,8 +9,8 @@ from app.helpers.mixins import ConnectMixin
 class DatabaseView(View, ConnectMixin):
     """Представление принимает данные по валютам и сохраняет их в хранилище."""
 
-    def is_merge(self):
-        return self.request.query.get('merge', True)
+    def is_merge(self) -> bool:
+        return bool(int(self.request.query.get('merge', 1)))
 
     async def post(self):
         currency_api = await self.currency_api
