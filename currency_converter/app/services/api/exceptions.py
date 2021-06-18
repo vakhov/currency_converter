@@ -29,3 +29,7 @@ class CurrencyValueError(CurrencyError):
 
 class CurrencyNotFound(CurrencyError):
     """Валюта не найдена"""
+
+
+class CurrencyInvalidValue(CurrencyError):
+    """Неверное значение цены валюты."""
