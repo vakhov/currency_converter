@@ -4,7 +4,7 @@ from aiohttp.web_app import Application
 
 from app.helpers.klasses import Environ
 from app.routes import routes
-from app.services.api.converter import ConverterApi
+from app.services.api.currency import CurrencyApi
 
 
 async def connect_to_redis(url: str):
@@ -18,7 +18,7 @@ class RedisConnetion:
         self._app = app
 
     async def on_startup(self):
-        setattr(self._app, 'client', ConverterApi())
+        setattr(self._app, 'client', CurrencyApi())
 
     async def cleanup(self):
         pass
