@@ -1,16 +1,17 @@
+
 import json
 
 from aiohttp.web_response import json_response
 from aiohttp.web_urldispatcher import View
 
-from app.helpers.mixins import ConnectMixin
+from app.helpers.mixins import RedisConnectMixin
 
 
-class DatabaseView(View, ConnectMixin):
+class DatabaseView(View, RedisConnectMixin):
     """Представление принимает данные по валютам и сохраняет их в хранилище."""
 
     def is_merge(self) -> bool:
-        return bool(int(self.request.query.get('merge', 1)))
+        return bool(int(self.request.query.get('merge', '1')))
 
     async def post(self):
         currency_api = await self.currency_api

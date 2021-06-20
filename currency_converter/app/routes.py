@@ -5,5 +5,5 @@ from app.services.handlers.database import DatabaseView
 
 routes = (
     view(path='/convert', handler=ConvertView),
-    view(path='/database', handler=DatabaseView)
+    view(path='/database', handler=DatabaseView),
 )

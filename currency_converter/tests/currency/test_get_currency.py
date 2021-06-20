@@ -1,8 +1,10 @@
 from typing import Dict
+from unittest import mock
+from unittest.mock import MagicMock
 
 from aiohttp.test_utils import unittest_run_loop
 
-from tests.currency import BaseTestHandlers
+from tests.currency import BaseTestHandlers, RedisMock
 
 
 class TestConvertHandler(BaseTestHandlers):
@@ -20,6 +22,21 @@ class TestConvertHandler(BaseTestHandlers):
         )
 
     @unittest_run_loop
+    @mock.patch('app.helpers.mixins.RedisConnectMixin.connect', new_callable=RedisMock)
+    async def test_non_valid_http_method(self, redis_connect: MagicMock):
+        """Тест: не валидный http метод"""
+        convert_path = self.convert_path.format(
+            cur_from='RUB',
+            cur_to='USD',
+            amount=42
+        )
+        resp = await self.client.post(path=convert_path)
+        resp.read()
+
+        self.assertStatusCode(resp, 405)
+        self.assertEqual(0, redis_connect.call_count)
+
+    @unittest_run_loop
     async def test_convert_rub_to_usd(self):
         """Тест: конвертация валют"""
         database_path = self.database_path.format(merge_state=1)
@@ -33,7 +50,7 @@ class TestConvertHandler(BaseTestHandlers):
         )
         resp = await self.client.get(path=convert_path)
         currencies = await resp.json()
-        self.assertEqual(resp.status, 200, await resp.text())
+        self.assertStatusCode(resp)
         self.assertDictEqual(currencies, {'result': 0.5792719930266685})
 
     @unittest_run_loop
@@ -50,7 +67,7 @@ class TestConvertHandler(BaseTestHandlers):
         )
         resp = await self.client.get(path=convert_path)
         currencies = await resp.json()
-        self.assertEqual(resp.status, 200, await resp.text())
+        self.assertStatusCode(resp)
         self.assertDictEqual(currencies, {'result': 0.5792719930266685})
 
     @unittest_run_loop
@@ -66,4 +83,4 @@ class TestConvertHandler(BaseTestHandlers):
             amount=42
         )
         resp = await self.client.get(path=convert_path)
-        self.assertEqual(resp.status, 400, await resp.text())
+        self.assertStatusCode(resp, 400)

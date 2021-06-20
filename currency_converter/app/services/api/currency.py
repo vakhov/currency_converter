@@ -3,9 +3,6 @@ import re
 from decimal import Decimal
 from typing import Dict
 
-import aioredis
-from aioredis import Redis
-
 from app.helpers.klasses import Singleton, Environ
 from app.services.api.exceptions import CurrencyValueError, CurrencyNotFound
 
@@ -40,7 +37,7 @@ class CurrencyApi(metaclass=Singleton):
             raise CurrencyNotFound(f'Валюта {currency} не была найдена.')
         return Decimal(rate.decode())
 
-    async def update(self, data: Dict[str, Decimal], merge=True):
+    async def update(self, data: Dict[str, Decimal], merge=True) -> None:
         """
         Update данных
 
